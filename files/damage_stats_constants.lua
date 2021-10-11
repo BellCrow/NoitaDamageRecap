@@ -1,2 +1,0 @@
-damage_stats_table_name = "damage_stats_table_component"
-damage_stats_storage_component_name = "damage_stats_storage_component"

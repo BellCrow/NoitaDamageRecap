@@ -1,6 +1,6 @@
 <Mod
-	name="Damage stats"
-	description="After death a detailed statistic of dmg is shown. Includes damage type, amount, and the enemie who did it"
+	name="Damage recap"
+	description="After death a detailed statistic of dmg is shown. Includes damage type, amount, and the enemie who did it etc."
 	request_no_api_restrictions="0" 
 > 
 </Mod>
