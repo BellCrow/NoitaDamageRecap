@@ -30,6 +30,10 @@ function serialize_table(val, name, skipnewlines, depth)
     return tmp
 end
 
+function deserialize_table(str_serialized_table)
+    return loadstring(str_serialized_table)
+end
+
 function get_player_entity()
     return EntityGetClosestWithTag( 0, 0, "player_unit")
 end

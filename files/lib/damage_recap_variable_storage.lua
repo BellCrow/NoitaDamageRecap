@@ -80,4 +80,3 @@ function __get_value(entity_id, variable_name)
     end
     return value
 end
-
