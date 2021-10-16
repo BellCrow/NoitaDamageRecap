@@ -1,16 +1,32 @@
-damage_recap_damage_aggregator = {}
-damage_recap_damage_aggregator.__index = damage_recap_damage_aggregator
+dofile_once("mods/damage_recap/files/lib/util.lua")
 
-function damage_recap_damage_aggregator:new()
+damage_aggregator = {}
+damage_aggregator.__index = damage_aggregator
+
+function damage_aggregator:new()
     local instance = {}
-    setmetatable(instance, damage_recap_damage_aggregator)
+    setmetatable(instance, damage_aggregator)
     instance.damages = {}
     --set fields like this
     --instance.int_value = int_argument
     return instance
 end
+-- region serialization interface
+function damage_aggregator:deserialize(str_data)
+    local instance = {}
+    setmetatable(instance, damage_aggregator)
+    instance.damages = deserialize_table(str_data)
+    --set fields like this
+    --instance.int_value = int_argument
+    return instance
+end
 
-function damage_recap_damage_aggregator:add_damage(str_damage_type, num_damage)
+function damage_aggregator:serialize()
+    return serialize_table(self.damages)
+end
+-- endregion
+
+function damage_aggregator:add_damage(str_damage_type, num_damage)
     --access fields/properties like:
     --self.fieldName
     --call methods like:
@@ -22,12 +38,12 @@ function damage_recap_damage_aggregator:add_damage(str_damage_type, num_damage)
     end
 end
 
-function damage_recap_damage_aggregator:to_string()
+function damage_aggregator:to_string()
     --access fields/properties like:
     --self.fieldName
     --call methods like:
     --self:methodName
-    local damage_stats = "-------Damage entries: ".. table.getn(self.damages) .."-------\n"
+    local damage_stats = "\n-------Damage recap-------\n"
     
     for damage_type, damage in pairs(self.damages)do
         

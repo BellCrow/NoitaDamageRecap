@@ -1,9 +1,9 @@
-damage_recap_variable_storage = {}
-damage_recap_variable_storage.__index = damage_recap_variable_storage
+variable_storage = {}
+variable_storage.__index = variable_storage
 
-function damage_recap_variable_storage:new(entity_id)
+function variable_storage:new(entity_id)
     local instance = {}
-    setmetatable(instance, damage_recap_variable_storage)
+    setmetatable(instance, variable_storage)
     instance.entity_id = entity_id
     --set fields like this
     --instance.int_value = int_argument
@@ -11,7 +11,7 @@ function damage_recap_variable_storage:new(entity_id)
 end
 
 -- adds a new or updates an existing variable in the mapping or adds one if it does not exist yet
-function damage_recap_variable_storage:set_value(str_key, str_value)
+function variable_storage:set_value(str_key, str_value)
     --access fields/properties like:
     --self.fieldName
     --call methods like:
@@ -19,7 +19,7 @@ function damage_recap_variable_storage:set_value(str_key, str_value)
     __set_value(self.entity_id,str_key,str_value)
 end
 
-function damage_recap_variable_storage:get_value(str_key)
+function variable_storage:get_value(str_key)
     --access fields/properties like:
     --self.fieldName
     --call methods like:
