@@ -1,3 +1,5 @@
+dofile_once("mods/damage_recap/files/lib/util.lua")
+
 variable_storage = {}
 variable_storage.__index = variable_storage
 
@@ -25,6 +27,11 @@ function variable_storage:get_value(str_key)
     --call methods like:
     --self:methodName
     return __get_value(self.entity_id, str_key)
+end
+
+function get_player_variable_storage()
+    local playerEntity = get_player_entity()
+    return variable_storage:new(playerEntity)
 end
 
 -- value storage code was offered by https://github.com/ExtolsSuperSauce/Forge_Perks
@@ -70,13 +77,15 @@ function __get_value(entity_id, variable_name)
     local variable_found = false
     for _,comp_id in pairs(components) do 
         local var_name = ComponentGetValue2( comp_id, "name" )
+        
         if(var_name == variable_name) then
             variable_found = true
             value = ComponentGetValue2(comp_id, "value_string")
+        else
         end
     end
     if(not variable_found)then
-        error("Tried to access non existant variable " .. tostring(variable_name))
+        error("Tried to access non existant variable " .. tostring(variable_name),2)
     end
     return value
 end
