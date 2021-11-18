@@ -1,6 +1,7 @@
 dofile_once("mods/damage_recap/files/model/damage_aggregator.lua")
 dofile_once("mods/damage_recap/files/lib/util.lua")
 dofile_once("mods/damage_recap/files/lib/variable_storage.lua")
+dofile_once("mods/damage_recap/files/constants.lua")
 
 function death( damage_type_bit_field, damage_message, entity_thats_responsible, drop_items )
     print("in death handler")

@@ -1,4 +1,3 @@
-dofile_once("mods/damage_recap/files/constants.lua")
 dofile_once("mods/damage_recap/files/lib/json_serializer.lua")
 
 function serialize_from_table(table_data)
@@ -10,7 +9,12 @@ function deserialize_to_table(str_serialized_table)
 end
 
 function get_player_entity()
-    return EntityGetClosestWithTag( 0, 0, "player_unit")
+    player_entity = EntityGetClosestWithTag( 0, 0, "player_unit")
+    return player_entity
+end
+
+function is_player_alive()
+    return not(get_player_entity() == 0)
 end
 
 function table_len(table_to_count)

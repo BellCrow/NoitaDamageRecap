@@ -1,5 +1,6 @@
 dofile_once("mods/damage_recap/files/lib/util.lua")
 dofile_once("mods/damage_recap/files/model/damage_type.lua")
+dofile_once("mods/damage_recap/files/constants.lua")
 
 damage_aggregator = {}
 damage_aggregator.__index = damage_aggregator
@@ -75,4 +76,31 @@ function damage_aggregator:get_damage_by_name(str_damage_type)
         end
     end
     return nil
+end
+
+function damage_aggregator:get_damage_table()
+    local ret = {}
+    for damage_name, damage_type in pairs(self.damages)do 
+        ret[damage_name] = damage_type
+    end
+    return ret
+end
+
+
+-- seems like a bad idead to have a hard dependency to 
+function load_singleton()
+    local variable_storage_var = get_player_variable_storage()
+    ret = {}
+    if(variable_storage_var:exists_value(damage_aggregator_save_key)) then
+        ret = damage_aggregator:new()
+        return ret
+    else
+        local damage_aggregator_str = variable_storage_var:get_value(damage_aggregator_save_key)
+        local damage_aggregator_var = damage_aggregator:from_table(deserialize_to_table(damage_aggregator_str))
+        return damage_aggregator_var
+    end    
+end
+
+function save_singleton(damage_aggregator)
+    
 end
