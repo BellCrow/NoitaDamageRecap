@@ -44,6 +44,7 @@ function damage_aggregator:add_damage(str_damage_type, num_damage)
     local damage_type_to_increase = self:get_damage_by_name(str_damage_type)
 
     if damage_type_to_increase == nil then
+        print("New damage type registered: " .. str_damage_type)
         damage_type_to_increase = damage_type:new(str_damage_type)
         self.damages[str_damage_type] = damage_type_to_increase
     end

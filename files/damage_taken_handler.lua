@@ -9,9 +9,9 @@ function damage_received( damage, desc, entity_who_caused, is_fatal)
     if not is_initialized() then
         initialize()
     end
-    
+
     local normalized_damage = damage * 25
-    damage_aggregator_var:add_damage(desc,normalized_damage)
+    damage_aggregator_var:add_damage(desc, normalized_damage)
     
     save_damage_aggregation()
 end

@@ -13,36 +13,44 @@ function damage_type:new(str_damage_name)
     return instance
 end
 
+function damage_type:is_material_damage()
+    -- damage types we get from noita that are cause by materials are given like: 
+    -- "damage from material: lava" thus need to be parsed in a way. this methods
+    -- determines if this damage entry is such a damage type instance
+    return string.find(self.damage_type,":") ~= nil
+end
+
+function damage_type:get_material_damage_short_name()
+    -- converts a damage text like "damage from material: lava" into just the string "lava"
+    if(not self:is_material_damage()) then
+        error("Tried to get damage material name of damage type that is not material damage. Damage type: " .. tostring(self.damage_type))
+    end
+
+    local damage_name_separator_index = string.find(self.damage_type,":")
+    local normalized_damage_string = string.sub(self.damage_type, damage_name_separator_index + 2)
+    normalized_damage_string = normalized_damage_string:gsub(" ","_")
+    string.lower(normalized_damage_string)
+    return normalized_damage_string
+end
+
 function damage_type:add_damage_instance(num_damage)
-    --access fields/properties like:
-    --self.fieldName
-    --call methods like:
-    --self:methodName
+    
     self.damage_instances[tostring(#self.damage_instances)] = num_damage
     self.damage_sum = self.damage_sum + num_damage
 end
 
 function damage_type:get_type()
-    --access fields/properties like:
-    --self.fieldName
-    --call methods like:
-    --self:methodName
+    
     return self.damage_type
 end
 
 function damage_type:get_sum()
-    --access fields/properties like:
-    --self.fieldName
-    --call methods like:
-    --self:methodName
+    
     return self.damage_sum
 end
 
 function damage_type:get_instances()
-    --access fields/properties like:
-    --self.fieldName
-    --call methods like:
-    --self:methodName
+    
     return self.damage_instances
 end
 
@@ -69,10 +77,7 @@ end
 
 
 function damage_type:to_string()
-    --access fields/properties like:
-    --self.fieldName
-    --call methods like:
-    --self:methodName
+    
     local ret = ""
     ret = ret .. "Type: " .. self:get_type()
     ret = ret .. "\n"
