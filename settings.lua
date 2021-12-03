@@ -1,7 +1,7 @@
  -- required by settings as it contains needed enums
-dofile("data/scripts/lib/mod_settings.lua")
+dofile("data/scripts/Lib/mod_settings.lua")
 
-local mod_id = "damage_recap"
+local MOD_ID = "damage_recap"
 
 -- these are values needed by noita under these specific names
 -- no lua warnings appropriate here
@@ -57,9 +57,9 @@ mod_settings = {
 -- 		- before mod initialization when starting a new game (init_scope will be MOD_SETTING_SCOPE_NEW_GAME)
 --		- when entering the game after a restart (init_scope will be MOD_SETTING_SCOPE_RESTART)
 --		- at the end of an update when mod settings have been changed via ModSettingsSetNextValue() and the game is unpaused (init_scope will be MOD_SETTINGS_SCOPE_RUNTIME)
-function ModSettingsUpdate( init_scope )
-	local old_version = mod_settings_get_version( mod_id ) -- This can be used to migrate some settings between mod versions.
-	mod_settings_update( mod_id, mod_settings, init_scope )
+function ModSettingsUpdate( initScope )
+	local old_version = mod_settings_get_version( MOD_ID ) -- This can be used to migrate some settings between mod versions.
+	mod_settings_update( MOD_ID, mod_settings, initScope )
 end
 
 -- This function should return the number of visible setting UI elements.
@@ -69,10 +69,10 @@ end
 -- At the moment it is fine to simply return 0 or 1 in a custom implementation, but we don't guarantee that will be the case in the future.
 -- This function is called every frame when in the settings menu.
 function ModSettingsGuiCount()
-	return mod_settings_gui_count( mod_id, mod_settings )
+	return mod_settings_gui_count( MOD_ID, mod_settings )
 end
 
 -- This function is called to display the settings UI for this mod. Your mod's settings wont be visible in the mod settings menu if this function isn't defined correctly.
-function ModSettingsGui( gui, in_main_menu )
-	mod_settings_gui( mod_id, mod_settings, gui, in_main_menu )
+function ModSettingsGui( gui, inMainMenu )
+	mod_settings_gui( MOD_ID, mod_settings, gui, inMainMenu )
 end

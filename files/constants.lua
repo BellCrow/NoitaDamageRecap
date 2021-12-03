@@ -1,1 +1,1 @@
-damage_aggregator_save_key = "damage_recap_damage_aggregator"
+DamageAggregatorSaveKey = "damage_recap_damage_aggregator"

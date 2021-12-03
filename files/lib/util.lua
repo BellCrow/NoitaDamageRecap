@@ -1,26 +1,26 @@
-dofile_once("mods/damage_recap/files/lib/json_serializer.lua")
+dofile("mods/damage_recap/files/Lib/JsonSerializer.lua")
 
-function serialize_from_table(table_data)
-    return json_encode(table_data)
+function SerializeFromTable(table)
+    return json_encode(table)
 end
 
-function deserialize_to_table(str_serialized_table)
-    return json_decode(str_serialized_table)
+function DeserializeToTable(serializedTable)
+    return json_decode(serializedTable)
 end
 
-function get_player_entity()
-    player_entity = EntityGetClosestWithTag( 0, 0, "player_unit")
-    return player_entity
+function GetPlayerEntity()
+    local playerEntity = EntityGetClosestWithTag( 0, 0, "player_unit")
+    return playerEntity
 end
 
-function is_player_alive()
-    return not(get_player_entity() == 0)
+function IsPlayerAlive()
+    return GetPlayerEntity() ~= 0
 end
 
-function table_len(table_to_count)
-    local table_count = 0
-    for _,_ in pairs(table_to_count) do
-        table_count = table_count + 1
+function GetTableLen(table)
+    local tableCount = 0
+    for _,_ in pairs(table) do
+        tableCount = tableCount + 1
     end
-    return table_count
+    return tableCount
 end
