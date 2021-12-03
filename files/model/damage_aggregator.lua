@@ -88,9 +88,8 @@ function damage_aggregator:get_damage_table()
 end
 
 
--- seems like a bad idead to have a hard dependency to 
 function load_singleton()
-    local variable_storage_var = get_player_variable_storage()
+    local variable_storage_var = get_variable_storage()
     ret = {}
     if(variable_storage_var:exists_value(damage_aggregator_save_key)) then
         ret = damage_aggregator:new()

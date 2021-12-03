@@ -1,0 +1,18 @@
+{
+    "Lua.diagnostics.globals": [
+        "EntityAddComponent",
+        "EntityLoad",
+        "EntityGetTransform",
+        "ComponentSetValue2",
+        "ComponentGetValue2",
+        "EntityGetComponent",
+        "EntityAddComponent2",
+        "GuiText",
+        "GuiLayoutBeginVertical",
+        "GuiCreate",
+        "GuiLayoutEnd",
+        "EntityGetWithName",
+        "EntityCreateNew",
+        "GuiGetScreenDimensions"
+    ]
+}

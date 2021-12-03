@@ -1,5 +1,7 @@
 dofile("mods/damage_recap/files/lib/util.lua")
 
+local variable_storage_entity_name = "DAMAGE_RECAP_MOD_VARIABLE_STORAGE_ENTITY"
+
 -- value storage code was offered by https://github.com/ExtolsSuperSauce/Forge_Perks
 -- subsequently a bit reworked by me though
 local function __internal_add_new_variable(entity_id, variable_name, initial_value)
@@ -96,7 +98,15 @@ function variable_storage:exists_value(str_key)
     return variable_found
 end
 
-function get_player_variable_storage()
-    local playerEntity = get_player_entity()
-    return variable_storage:new(playerEntity)
+local function get_storage_entity()
+    local entity_id = EntityGetWithName(variable_storage_entity_name)
+    if(entity_id == 0) then
+        entity_id = EntityCreateNew(variable_storage_entity_name)
+    end
+    return entity_id
+end
+
+function get_variable_storage()
+    local storage_entity_id = get_storage_entity()
+    return variable_storage:new(storage_entity_id)
 end

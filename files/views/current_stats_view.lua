@@ -169,27 +169,55 @@ local function translate_and_group_damage_table(damage_table)
     return return_table
 end
 
+local function get_dimensions_of_print_text(printable_damage_table, gui_handle)
+    local max_text_width = 0
+    local text_height_total = 0
+    for damage_name, damage_sum in pairs(printable_damage_table) do
+        local damage_table_entry = damage_name .. " -> " .. string.format("%.2f", damage_sum)
+        local text_width, text_height = GuiGetTextDimensions(gui_handle, damage_table_entry)
+        text_height_total = text_height_total + text_height
+        max_text_width = math.max(max_text_width, text_width)
+    end
+    return max_text_width, text_height_total
+end
+
 function draw_current_damage_as_menu(damage_aggregator)
-    local menu_pos_x = 0
-    local menu_pos_y = 10
+    
     local damage_table = damage_aggregator:get_damage_table()
 
     local printable_damage_table = {}
 
-    if(should_group_damage())then
+    if(should_group_damage()) then
         printable_damage_table = translate_and_group_damage_table(damage_table)
     else
         printable_damage_table = translate_damage_table(damage_table)
     end
 
     local gui_handle = GuiCreate()
-    GuiLayoutBeginVertical(gui_handle, menu_pos_x, menu_pos_y)
-    GuiText(gui_handle, 0, 0, "== Damage table ==")
+    GuiStartFrame(gui_handle)
+    
+    local screen_width, screen_height = GuiGetScreenDimensions(gui_handle)
+    
+    local text_width, text_height = get_dimensions_of_print_text(printable_damage_table, gui_handle)
+    local damage_table_padding = 4
+    local damage_table_x = 0
+    local damage_table_y = 0
+
+    if(ModSettingGet("damage_recap.auto_position_table_on_screen")) then
+        damage_table_x = screen_width - text_width - damage_table_padding
+        damage_table_y = screen_height - text_height - damage_table_padding
+    else
+        damage_table_x = ModSettingGet("damage_recap.damage_table_x")
+        damage_table_y = ModSettingGet("damage_recap.damage_table_y")
+    end
+
+    local use_pixel_position_for_gui_element = 1
+    GuiLayoutBeginVertical(gui_handle, damage_table_x, damage_table_y, use_pixel_position_for_gui_element)
+    -- GuiText(gui_handle, 0, 0, "== Damages taken ==")
     for damage_name, damage_sum in pairs(printable_damage_table) do
         local damage_table_entry = damage_name .. " -> " .. string.format("%.2f", damage_sum)
         GuiText(gui_handle, 0, 0, damage_table_entry)
     end
-    GuiText(gui_handle, 0, 0, "== End of table ==")
 
     GuiLayoutEnd(gui_handle)
 end

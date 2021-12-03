@@ -20,6 +20,33 @@ mod_settings = {
         ui_description = "Group common damage types as one value in the ui (e.g. lava damage and fire damage)",
         value_default = false,
         scope = MOD_SETTING_SCOPE_RUNTIME
+    },
+    {
+        id = "auto_position_table_on_screen",
+        ui_name = "Position output table on screen automatically",
+        ui_description = "Depicts whether the table is automatically put on the screen appropriately or if the values for position x and y supplied by the user are used",
+        value_default = true,
+        scope = MOD_SETTING_SCOPE_RUNTIME
+    },
+    {
+        id = "damage_table_x",
+        ui_name = "x coordinate of the table in GUI",
+        ui_description = "The x coordinate of the table for damage that are to be printed in the GUI",
+        value_default = 5,
+        value_min = 0,
+        value_max = 2000,
+        value_display_multiplier = 1,
+        scope = MOD_SETTING_SCOPE_RUNTIME
+    },
+    {
+        id = "damage_table_y",
+        ui_name = "y coordinate of the table in GUI",
+        ui_description = "The y coordinate of the table for damage that are to be printed in the GUI",
+        value_default = 5,
+        value_min = 0,
+        value_max = 2000,
+        value_display_multiplier = 1,
+        scope = MOD_SETTING_SCOPE_RUNTIME
     }
 }
 
