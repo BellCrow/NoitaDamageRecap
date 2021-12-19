@@ -1,4 +1,4 @@
-local USE_PIXEL_POSITION_FOR_GUI_ELEMENT = 1
+dofile("mods/damage_recap/files/Lib/Widgets/Table.lua")
 
 local function shouldGroupDamage()
     local shouldGroupDamage = ModSettingGet("damage_recap.group_damage_types")
@@ -6,7 +6,7 @@ local function shouldGroupDamage()
 end
 
 local function convertDamageTypeToReadableString(damageEntry)
---logic to convert the damage types given by the noita
+    --logic to convert the damage types given by the noita
     -- runtime like "$fire_damage" and "damage from material: lava"
     -- into string that are properly formed for formatted
     -- outputting on the screen
@@ -57,26 +57,7 @@ local function translateDamageTable(damageTable)
 end
 
 local function translateAndGroupDamageTable(damageTable)
-    -- all damage types
-    -- ["$damage_sun"] = "Sun",
-    -- ["$damage_radioactive"] = "Toxic Sludge/Radio",
-    -- ["$damage_projectile"] = "Projectile",
-    -- ["$damage_overeating"] = "Overeating",
-    -- ["$damage_electricity"] = "Electricity",
-    -- ["$damage_explosion"] = "Explosion",
-    -- ["$damage_fire"] = "Fire",
-    -- ["$damage_melee"] = "Melee",
-    -- ["$damage_drill"] = "Drill",
-    -- ["$damage_slice"] = "Slice",
-    -- ["$damage_ice"] = "Ice",
-    -- ["$damage_healing"] = "Healing",
-    -- ["$damage_physicshit"] = "Physics hit",
-    -- ["$damage_poison"] = "Poison",
-    -- ["$damage_water"] = "Water",
-    -- ["$damage_fall"] = "Fall",
-    -- ["$damage_drowning"] = "Drowning",
-    -- ["$damage_kick"] = "Kick"
-    
+
     --these are the damage types to which all other damage types need to be reduced
     local reducedDamageTable = {
         fire = 0,
@@ -153,10 +134,11 @@ local function translateAndGroupDamageTable(damageTable)
         if(reducedDamageType == nil) then
             -- corner case, where a damage type is not yet mapped in the reduction map.
             -- we create a placeholder for the ui so we dont get errors and get to know the missing id
-            -- the substring is to remove ht leading $ to prevent translation error while printing to gui
+           
 
             reducedDamageType = transformedDamageType 
             if(damage:IsMaterialDamage())then
+                 -- remove the leading $ to prevent translation error while printing to gui
                 transformedDamageType = string.sub(transformedDamageType, 2)
             end 
             reducedDamageTable[reducedDamageType] = 0
@@ -168,18 +150,6 @@ local function translateAndGroupDamageTable(damageTable)
     end
     
     return returnTable
-end
-
-local function getDimensionsOfPrintText(printableDamageTable, guiHandle)
-    local maxTextWidth = 0
-    local textHeightTotal = 0
-    for damageName, damageSum in pairs(printableDamageTable) do
-        local damageTableEntry = damageName .. " -> " .. string.format("%.2f", damageSum)
-        local textWidth, textHeight = GuiGetTextDimensions(guiHandle, damageTableEntry)
-        textHeightTotal = textHeightTotal + textHeight
-        maxTextWidth = math.max(maxTextWidth, textWidth)
-    end
-    return maxTextWidth, textHeightTotal
 end
 
 function DrawCurrentDamageAsMenu(damageAggregator)
@@ -196,31 +166,28 @@ function DrawCurrentDamageAsMenu(damageAggregator)
 
     local guiHandle = GuiCreate()
     GuiStartFrame(guiHandle)
-    
-    local screenWidth, screenHeight = GuiGetScreenDimensions(guiHandle)
-    
-    local textWidth, textHeight = getDimensionsOfPrintText(printableDamageTable, guiHandle)
-    local damageTablePadding = 4
-    local damageTableX = 0
-    local damageTableY = 0
 
+    local tableEntries = {}
+    local conversionIndex = 1
+    for damageName, damageAmount in pairs(printableDamageTable) do
+        tableEntries[conversionIndex] = {}
+        tableEntries[conversionIndex][tostring(damageName)] = string.format("%.2f",damageAmount)
+
+        conversionIndex = conversionIndex + 1
+    end
+    
+    local printTable = Table:New(tableEntries)
+    printTable:SetHeader("Damages")
     if(ModSettingGet("damage_recap.auto_position_table_on_screen")) then
-        damageTableX = screenWidth - textWidth - damageTablePadding
-        damageTableY = screenHeight - textHeight - damageTablePadding
+        printTable:SetLayoutMode(LAYOUT_ALIGNMENT)
+        printTable:SetHorizontalAlignment(LAYOUT_HORIZONTAL_RIGHT)
+        printTable:SetVerticalAlignment(LAYOUT_VERTICAL_BOTTOM)
     else
-        damageTableX = ModSettingGet("damage_recap.damage_table_x")
-        damageTableY = ModSettingGet("damage_recap.damage_table_y")
+        printTable:SetLayoutMode(LAYOUT_ABSOLUTE)
+        printTable:SetPosition(tonumber(ModSettingGet("damage_recap.damage_table_x")), tonumber (ModSettingGet("damage_recap.damage_table_y")))
     end
 
-    
-    GuiLayoutBeginVertical(guiHandle, damageTableX, damageTableY, USE_PIXEL_POSITION_FOR_GUI_ELEMENT)
-    -- GuiText(gui_handle, 0, 0, "== Damages taken ==")
-    for name, sum in pairs(printableDamageTable) do
-        local printEntry = name .. " -> " .. string.format("%.2f", sum)
-        GuiText(guiHandle, 0, 0, printEntry)
-    end
-
-    GuiLayoutEnd(guiHandle)
+    printTable:Print(guiHandle)
 end
 
 

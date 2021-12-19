@@ -32,21 +32,19 @@ mod_settings = {
         id = "damage_table_x",
         ui_name = "x coordinate of the table in GUI",
         ui_description = "The x coordinate of the table for damage that are to be printed in the GUI",
-        value_default = 5,
-        value_min = 0,
-        value_max = 2000,
-        value_display_multiplier = 1,
-        scope = MOD_SETTING_SCOPE_RUNTIME
+        value_default = "20",
+        text_max_length = 20,
+        allowed_characters = "0123456789",
+        scope = MOD_SETTING_SCOPE_RUNTIME,
     },
     {
         id = "damage_table_y",
         ui_name = "y coordinate of the table in GUI",
         ui_description = "The y coordinate of the table for damage that are to be printed in the GUI",
-        value_default = 5,
-        value_min = 0,
-        value_max = 2000,
-        value_display_multiplier = 1,
-        scope = MOD_SETTING_SCOPE_RUNTIME
+        value_default = "20",
+        text_max_length = 20,
+        allowed_characters = "0123456789",
+        scope = MOD_SETTING_SCOPE_RUNTIME,
     }
 }
 
