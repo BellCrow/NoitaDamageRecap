@@ -40,3 +40,4 @@ luac.out
 *.hex
 
 tools_modding/component_documentation.txt
+.vscode/
