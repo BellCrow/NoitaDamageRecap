@@ -1,1 +1,2 @@
 DamageAggregatorSaveKey = "damage_recap_damage_aggregator"
+DamageDatabaseSaveKey = "damage_recap_damage_database"

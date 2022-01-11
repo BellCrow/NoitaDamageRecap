@@ -5,7 +5,6 @@ dofile("mods/damage_recap/files/Constants.lua")
 dofile("mods/damage_recap/files/Lib/VariableStorage.lua")
 dofile("mods/damage_recap/files/Lib/Widgets/Table.lua")
 
-
 -- debug helper
 dofile("data/scripts/perks/perk.lua")
 dofile("data/scripts/game_helpers.lua")
@@ -27,19 +26,6 @@ local function activateDebugPlayerState(playerEntity)
     perk_pickup(0, playerEntity, "INVISIBILITY", false, false, true)
     perk_pickup(0, playerEntity, "REPELLING_CAPE", false, false, true)
     perk_pickup(0, playerEntity, "REPELLING_CAPE", false, false, true)
-end
-
-local function createDamageAggregator()
-    --create the initial empy instance of the damage aggregator
-    local damageAggregatorVar = DamageAggregator:New()
-    local variableStorage = GetVariableStorage()
-    local serializedData = SerializeFromTable(damageAggregatorVar:ToTable())
-    variableStorage:SetValue(DamageAggregatorSaveKey, serializedData)
-end
--- end helper
-
-function OnModPreInit()
-	createDamageAggregator()
 end
 
 function OnPlayerSpawned(playerEntity)

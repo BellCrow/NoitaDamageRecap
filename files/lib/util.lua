@@ -8,15 +8,6 @@ function DeserializeToTable(serializedTable)
     return json_decode(serializedTable)
 end
 
-function GetPlayerEntity()
-    local playerEntity = EntityGetClosestWithTag( 0, 0, "player_unit")
-    return playerEntity
-end
-
-function IsPlayerAlive()
-    return GetPlayerEntity() ~= 0
-end
-
 function GetTableLen(table)
     local tableCount = 0
     for _,_ in pairs(table) do

@@ -20,6 +20,7 @@
         "GuiStartFrame",
         "EntityGetClosestWithTag",
         "GuiGetTextDimensions",
-        "USE_PIXEL_POSITION_FOR_GUI_ELEMENT"
+        "USE_PIXEL_POSITION_FOR_GUI_ELEMENT",
+        "GamePrint"
     ]
 }

@@ -15,37 +15,46 @@ mod_settings = {
         not_settings = true
     },
     {
-        id = "group_damage_types",
-        ui_name = "Group damages",
-        ui_description = "Group common damage types as one value in the ui (e.g. lava damage and fire damage)",
-        value_default = false,
+        category_id = "positioning",
+		ui_name = "Positioning",
+		ui_description = "Determines where on the screen the table for the damages will be printed",
+		settings = {
+            {
+                id = "auto_position_table_on_screen",
+                ui_name = "Position output table on screen automatically",
+                ui_description = "Depicts whether the table is automatically put on the screen appropriately or if the values for position x and y supplied by the user are used",
+                value_default = true,
+                scope = MOD_SETTING_SCOPE_RUNTIME
+            },
+            {
+                id = "damage_table_x",
+                ui_name = "x coordinate of the table in GUI",
+                ui_description = "The x coordinate of the table for damage that are to be printed in the GUI",
+                value_default = "20",
+                text_max_length = 20,
+                allowed_characters = "0123456789",
+                scope = MOD_SETTING_SCOPE_RUNTIME,
+            },
+            {
+                id = "damage_table_y",
+                ui_name = "y coordinate of the table in GUI",
+                ui_description = "The y coordinate of the table for damage that are to be printed in the GUI",
+                value_default = "20",
+                text_max_length = 20,
+                allowed_characters = "0123456789",
+                scope = MOD_SETTING_SCOPE_RUNTIME,
+            }
+        }
+    },
+    {
+        id = "aggregate_by",
+        ui_name = "Aggregate damage by",
+        ui_description = "Determines how the damage in the table is aggregated",
+        values = { {"damageType","Damage type"}, {"damageTypeSimplified","Damage type (simplified)"}, {"causingEntity","Causing entity"} },
+        value_default = "Damage type",
         scope = MOD_SETTING_SCOPE_RUNTIME
     },
-    {
-        id = "auto_position_table_on_screen",
-        ui_name = "Position output table on screen automatically",
-        ui_description = "Depicts whether the table is automatically put on the screen appropriately or if the values for position x and y supplied by the user are used",
-        value_default = true,
-        scope = MOD_SETTING_SCOPE_RUNTIME
-    },
-    {
-        id = "damage_table_x",
-        ui_name = "x coordinate of the table in GUI",
-        ui_description = "The x coordinate of the table for damage that are to be printed in the GUI",
-        value_default = "20",
-        text_max_length = 20,
-        allowed_characters = "0123456789",
-        scope = MOD_SETTING_SCOPE_RUNTIME,
-    },
-    {
-        id = "damage_table_y",
-        ui_name = "y coordinate of the table in GUI",
-        ui_description = "The y coordinate of the table for damage that are to be printed in the GUI",
-        value_default = "20",
-        text_max_length = 20,
-        allowed_characters = "0123456789",
-        scope = MOD_SETTING_SCOPE_RUNTIME,
-    }
+    
 }
 
 

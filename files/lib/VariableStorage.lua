@@ -62,6 +62,7 @@ local function __get_value(entityId, variableName)
 end
 --end variable storage code
 
+---@class VariableStorage
 local VariableStorage = {}
 VariableStorage.__index = VariableStorage
 
@@ -104,6 +105,7 @@ local function getStorageEntity()
     return entityId
 end
 
+---@return VariableStorage
 function GetVariableStorage()
     local storageEntityId = getStorageEntity()
     return VariableStorage:New(storageEntityId)

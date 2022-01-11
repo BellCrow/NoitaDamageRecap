@@ -1,6 +1,7 @@
+---@class DamageInstance
 DamageInstance = {}
 DamageInstance.__index = DamageInstance
-function DamageInstance:new(causingEntityName,damageName,damageAmount)
+function DamageInstance:New(causingEntityName,damageName,damageAmount)
     local instance = {}
     setmetatable(instance, DamageInstance)
     instance.causingEntityName = causingEntityName
@@ -23,13 +24,36 @@ function DamageInstance:GetDamageAmount()
     return self.damageAmount
 end
 
+---@param damageAmount number
 function DamageInstance:AddDamage(damageAmount)
     self.damageAmount = self.damageAmount + damageAmount
 end
 
-function DamageInstance:IsTypeEqualToOtherDamageInstance(otherDamageInstance)
+---@param otherDamageInstance DamageInstance
+function DamageInstance:IsEqual(otherDamageInstance)
     local isEqual = true;
-    isEqual = isEqual and otherDamageInstance.GetCausingEntityName() == self:GetCausingEntityName()
-    isEqual = isEqual and otherDamageInstance.GetDamageName() == self:GetDamageName()
+    isEqual = isEqual and otherDamageInstance:GetCausingEntityName() == self:GetCausingEntityName()
+    isEqual = isEqual and otherDamageInstance:GetDamageName() == self:GetDamageName()
     return isEqual
 end
+
+-- region serialization interface
+---@return DamageDatabase
+function DamageInstance.FromTable(table)
+    local instance = {}
+    setmetatable(instance, DamageInstance)
+    instance.causingEntityName = table.causingEntityName
+    instance.damageName = table.damageName
+    instance.damageAmount = table.damageAmount
+    return instance
+end
+
+---@return table
+function DamageInstance:ToTable()
+    local ret = {}
+    ret.causingEntityName = self.causingEntityName
+    ret.damageName = self.damageName
+    ret.damageAmount = self.damageAmount
+    return ret
+end
+-- endregion
