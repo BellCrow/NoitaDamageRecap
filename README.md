@@ -27,7 +27,6 @@ You can choose between different ways on how to aggregate the shown damage numbe
 2) Open the zip file
 3) Copy the containing folder into the mods folder of noita usually here ..\SteamLibrary\steamapps\common\Noita\mods
 
-## Feedback
 
 ## Thanks go out to:
 The noita discord server in general
